@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.service.FacultyService;
 
+import java.util.Collection;
+
 @RestController
 @RequestMapping("/faculty")
 public class FacultyController {
@@ -18,9 +20,14 @@ public class FacultyController {
         return service.get(id);
     }
 
+    @GetMapping("/filterByColor")
+    public Collection<Faculty> filterByColor(@RequestParam String color) {
+        return service.filterByColor(color);
+    }
+
     @PostMapping
-    public void add(@RequestBody Faculty faculty) {
-        service.add(faculty);
+    public Faculty add(@RequestBody Faculty faculty) {
+        return service.add(faculty);
     }
 
     @PutMapping

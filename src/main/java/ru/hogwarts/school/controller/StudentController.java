@@ -21,7 +21,7 @@ public class StudentController {
     }
 
     @GetMapping("/filterByAge")
-    public Collection<Student> filterStudentByAge(@RequestParam int age) {
+    public Collection<Student> filterByAge(@RequestParam int age) {
         return service.filterByAge(age);
     }
 

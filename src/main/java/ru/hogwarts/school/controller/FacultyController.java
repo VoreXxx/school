@@ -31,12 +31,12 @@ public class FacultyController {
     }
 
     @PutMapping
-    public Faculty update(@RequestBody Faculty faculty) {
-        return service.update(faculty);
+    public Faculty update(@RequestBody Faculty faculty, @RequestParam Long id) {
+        return service.update(faculty, id);
     }
 
     @DeleteMapping
-    public Faculty delete(@RequestParam long id) {
-        return service.delete(id);
+    public void delete(@RequestParam long id) {
+        service.delete(id);
     }
 }

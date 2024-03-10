@@ -30,13 +30,13 @@ public class FacultyController {
         return service.add(faculty);
     }
 
-    @PutMapping
-    public Faculty update(@RequestBody Faculty faculty, @RequestParam Long id) {
+    @PutMapping("/{id}")
+    public Faculty update(@RequestBody Faculty faculty, @PathVariable Long id) {
         return service.update(faculty, id);
     }
 
-    @DeleteMapping
-    public void delete(@RequestParam long id) {
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable long id) {
         service.delete(id);
     }
 }

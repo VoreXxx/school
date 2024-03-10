@@ -1,6 +1,7 @@
 package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
+import ru.hogwarts.school.exception.FacultyNotFoundException;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repository.FacultyRepository;
 
@@ -22,13 +23,13 @@ public class FacultyService {
 
     //Get(GET)
     public Faculty get(long id) {
-        return facultyRepository.findById(id).get();
+        return facultyRepository.findById(id).orElseThrow(FacultyNotFoundException::new);
     }
 
 
     //Update(PUT)
     public Faculty update(Faculty faculty, Long id) {
-        facultyRepository.findById(id);
+        facultyRepository.findById(id).orElseThrow(FacultyNotFoundException::new);
         return facultyRepository.save(faculty);
     }
 

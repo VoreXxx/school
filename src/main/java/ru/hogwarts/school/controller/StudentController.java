@@ -25,11 +25,6 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
-    @GetMapping("/filterByAge")
-    public Collection<Student> filterByAge(@RequestParam int age) {
-        return service.filterByAge(age);
-    }
-
     @PostMapping
     public Student add(@RequestBody Student student) {
         return service.add(student);
@@ -44,5 +39,15 @@ public class StudentController {
     public ResponseEntity<Student> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping
+    public Collection<Student> getAllStudent() {
+        return service.getAllStudents();
+    }
+
+    @GetMapping("/filterByAge")
+    public Collection<Student> filterByAge(@RequestParam int age) {
+        return service.filterByAge(age);
     }
 }

@@ -43,7 +43,7 @@ public class StudentService {
 
     //Filter
     public Collection<Student> filterByAge(int age) {
-        return studentRepository.filterByAge(age);
+        return studentRepository.findByAge(age);
 
     }
 }

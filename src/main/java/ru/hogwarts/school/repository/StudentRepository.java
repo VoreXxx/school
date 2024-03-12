@@ -7,5 +7,5 @@ import java.util.Collection;
 import java.util.List;
 
 public interface StudentRepository extends JpaRepository<Student, Long> {
-    Collection<Student> filterByAge(int age);
+    Collection<Student> findByAge(int age);
 }

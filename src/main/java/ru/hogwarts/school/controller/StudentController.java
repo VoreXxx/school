@@ -41,7 +41,7 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public Collection<Student> getAllStudent() {
         return service.getAllStudents();
     }

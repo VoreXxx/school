@@ -36,7 +36,7 @@ public class FacultyController {
         service.delete(id);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public Collection<Faculty> getAllFaculty() {
         return service.getAllFaculty()  ;
     }

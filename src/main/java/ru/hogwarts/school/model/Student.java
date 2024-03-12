@@ -3,9 +3,7 @@ package ru.hogwarts.school.model;
 
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 @Entity
 public class Student {
@@ -14,6 +12,13 @@ public class Student {
     private Long id;
     private String name;
     private int age;
+
+    @ManyToOne
+    @JoinColumn(name = "faculty_id")
+    private Faculty faculty;
+
+    public Student() {
+    }
 
     //constructor
     public Student(Long id, String name, int age) {
@@ -36,6 +41,10 @@ public class Student {
         return age;
     }
 
+    public Faculty getFaculty() {
+        return faculty;
+    }
+
 
     //setter's
     public void setId(Long id) {
@@ -48,6 +57,10 @@ public class Student {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
     }
 
     @Override

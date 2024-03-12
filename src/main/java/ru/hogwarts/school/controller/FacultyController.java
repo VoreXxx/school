@@ -38,11 +38,18 @@ public class FacultyController {
 
     @GetMapping("/all")
     public Collection<Faculty> getAllFaculty() {
-        return service.getAllFaculty()  ;
+        return service.getAllFaculty();
     }
 
-    @GetMapping("/filterByColor")
+    @GetMapping("/filter/{color}")
     public Collection<Faculty> filterByColor(@RequestParam String color) {
         return service.filterByColor(color);
+    }
+
+    @GetMapping("/filter")
+    public Collection<Faculty> getFacultyByNameOrColor
+            (@RequestParam String name,
+             @RequestParam String color) {
+        return service.findByNameContainingIgnoreCaseOrColorContainingIgnoreCase(name, color);
     }
 }

@@ -1,37 +1,56 @@
 package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
+import ru.hogwarts.school.exception.StudentNotFoundException;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repository.StudentRepository;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collection;
 
 @Service
 public class StudentService {
-    //Map student's
-    private final Map<Long, Student> storage = new HashMap<>();
-    //Zero ID
-    private long nextId = 0;
+    private final StudentRepository studentRepository;
+
+    public StudentService(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
 
     //Add(POST)
-    public void add(Student student) {
-        storage.put(++nextId, student);
+    public Student add(Student student) {
+        return studentRepository.save(student);
     }
 
     //Get(GET)
     public Student get(long id) {
-        return storage.get(id);
+        return studentRepository.findById(id).orElseThrow(StudentNotFoundException::new);
     }
 
     //Update(PUT)
-    public void update(Student student) {
-        if (storage.containsKey(student.getId())) {
-            storage.put(student.getId(), student);
-        }
+    public Student update(Student student, Long id) {
+        studentRepository.findById(id).orElseThrow(StudentNotFoundException::new);
+        return studentRepository.save(student);
     }
 
     //Delete(DELETE)
     public void delete(long id) {
-        storage.remove(id);
+        studentRepository.deleteById(id);
+    }
+
+    //GetAllStudents
+    public Collection<Student> getAllStudents() {
+        return studentRepository.findAll();
+    }
+
+    //Filter
+    public Collection<Student> filterByAge(int age) {
+        return studentRepository.findByAge(age);
+    }
+
+    public Collection<Student> filterByAgeMinMax(Integer minAge, Integer maxAge) {
+        return studentRepository.findByAgeBetween(minAge, maxAge);
+    }
+
+    public Student getById(Long studentId) {
+        return studentRepository.getById(studentId);
     }
 }

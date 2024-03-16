@@ -1,40 +1,56 @@
 package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
+import ru.hogwarts.school.exception.FacultyNotFoundException;
 import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repository.FacultyRepository;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collection;
+import java.util.List;
 
 @Service
 public class FacultyService {
-    //Map student's
-    private final Map<Long, Faculty> storage = new HashMap<>();
-    //Zero ID
-    private long nextId = 0;
+    private final FacultyRepository facultyRepository;
+
+    public FacultyService(FacultyRepository facultyRepository) {
+        this.facultyRepository = facultyRepository;
+    }
 
     //Add(POST)
-    public void add(Faculty faculty) {
-        faculty.setId(++nextId);
-        storage.put(faculty.getId(), faculty);
+    public Faculty add(Faculty faculty) {
+        return facultyRepository.save(faculty);
     }
 
     //Get(GET)
     public Faculty get(long id) {
-        return storage.get(id);
+        return facultyRepository.findById(id).orElseThrow(FacultyNotFoundException::new);
     }
 
+
     //Update(PUT)
-    public Faculty update(Faculty faculty) {
-        if (storage.containsKey(faculty.getId())) {
-            storage.put(faculty.getId(), faculty);
-            return faculty;
-        }
-        return null;
+    public Faculty update(Faculty faculty, Long id) {
+        facultyRepository.findById(id).orElseThrow(FacultyNotFoundException::new);
+        return facultyRepository.save(faculty);
     }
 
     //Delete(DELETE)
-    public Faculty delete(long id) {
-        return storage.remove(id);
+    public void delete(long id) {
+        facultyRepository.deleteById(id);
+    }
+
+    //GetAllFaculty
+    public Collection<Faculty> getAllFaculty() {
+        return facultyRepository.findAll();
+    }
+
+    //Filter
+    public Collection<Faculty> filterByColor(String color) {
+        return facultyRepository.findByColor(color);
+    }
+
+    public Collection<Faculty> findByNameContainingIgnoreCaseOrColorContainingIgnoreCase
+            (String name, String color) {
+        return facultyRepository.findByNameContainingIgnoreCaseOrColorContainingIgnoreCase(name, color);
     }
 }

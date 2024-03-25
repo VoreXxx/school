@@ -82,8 +82,9 @@ public class StudentControllerTest {
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(MediaType.APPLICATION_JSON, response.getHeaders().getContentType());
-        List<Student> actualStudents = response.getBody().stream().collect(Collectors.toList());
+        List<Student> actualStudents = response.getBody().stream().toList();
         assertEquals((MediaType) savedStudents, (MediaType) actualStudents);
+
     }
 
     @Test

@@ -76,13 +76,12 @@ public class FacultyControllerTest {
                 .andExpect(jsonPath("$.color").value(color));
 
         JSONObject facultyObjectForUpdate = new JSONObject();
-        facultyObject.put("id", id);
-        facultyObject.put("name", updateName);
-        facultyObject.put("color", color);
+        faculty.setName(updateName);
+        when(facultyRepository.save(any(Faculty.class))).thenReturn(faculty);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .put("/faculty")
-                        .content(facultyObject.toString())
+                        .put("/faculty/" + id)
+                        .content(facultyObjectForUpdate.toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -91,19 +90,21 @@ public class FacultyControllerTest {
                 .andExpect(jsonPath("$.color").value(color));
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/faculty/" + id)
+                        .get("/faculty")
+                        .param("id", String.valueOf(id))
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(id))
-                .andExpect(jsonPath("$.name").value(name))
+                .andExpect(jsonPath("$.name").value(updateName))
                 .andExpect(jsonPath("$.color").value(color));
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/faculty/filter/" + color)
+                        .param("color", String.valueOf(color))
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(id))
-                .andExpect(jsonPath("$[0].name").value(name))
+                .andExpect(jsonPath("$[0].name").value(updateName))
                 .andExpect(jsonPath("$[0].color").value(color));
 
         mockMvc.perform(MockMvcRequestBuilders

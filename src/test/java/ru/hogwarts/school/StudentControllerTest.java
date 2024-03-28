@@ -1,12 +1,13 @@
 package ru.hogwarts.school;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.Assertions;
 import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,12 +19,7 @@ import ru.hogwarts.school.controller.StudentController;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
-import java.awt.*;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
-import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class StudentControllerTest {
@@ -73,8 +69,8 @@ public class StudentControllerTest {
 
     @Test
     void testGetStudents() {
-        ResponseEntity<List<Student>> response = restTemplate.exchange(
-                "http://localhost:" + port + "/student",
+         ResponseEntity<List<Student>> response = restTemplate.exchange(
+                "http://localhost:" + port + "/student/all",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<>() {
@@ -83,8 +79,7 @@ public class StudentControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(MediaType.APPLICATION_JSON, response.getHeaders().getContentType());
         List<Student> actualStudents = response.getBody().stream().toList();
-        assertEquals((MediaType) savedStudents, (MediaType) actualStudents);
-
+        assertEquals(savedStudents, actualStudents);
     }
 
     @Test
@@ -106,7 +101,7 @@ public class StudentControllerTest {
 
         ResponseEntity<Student> response =
                 this.restTemplate
-                        .exchange("/student" + savedStudents.get(0).getId(), HttpMethod.PUT,
+                        .exchange("/student/" + savedStudents.get(0).getId(), HttpMethod.PUT,
                                 entity, Student.class);
 
         assertEquals(response.getStatusCode(), HttpStatus.OK);
@@ -123,14 +118,5 @@ public class StudentControllerTest {
                                 entity, String.class);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-    }
-
-    private void assertEquals(MediaType applicationJson, MediaType contentType) {
-    }
-
-    private void assertEquals(HttpStatus httpStatus, HttpStatus statusCode) {
-    }
-
-    private void assertEquals(Student student, Student body) {
     }
 }

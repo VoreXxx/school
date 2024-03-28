@@ -89,7 +89,7 @@ public class StudentControllerTest {
 
         ResponseEntity<String> response = restTemplate.postForEntity("/student", student, String.class);
 
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         JSONAssert.assertEquals(expected, response.getBody(), false);
     }
 

@@ -1,0 +1,3 @@
+databaseChengeLog:
+  - include:
+      file: liquibase/scripts/1-createindecies.sql

@@ -1,6 +1,7 @@
 package ru.hogwarts.school.model;
 
 public class Student {
+    //model
     private Long id;
     private String name;
     private int age;

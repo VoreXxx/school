@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
+import java.util.Collection;
+
 @RestController
 @RequestMapping("/student")
 public class StudentController {
@@ -18,18 +20,23 @@ public class StudentController {
         return service.get(id);
     }
 
+    @GetMapping("/filterByAge")
+    public Collection<Student> filterByAge(@RequestParam int age) {
+        return service.filterByAge(age);
+    }
+
     @PostMapping
-    public void add(@RequestBody Student student) {
-        service.add(student);
+    public Student add(@RequestBody Student student) {
+       return service.add(student);
     }
 
     @PutMapping
-    public void update(@RequestBody Student student) {
-        service.update(student);
+    public Student update(@RequestBody Student student) {
+       return service.update(student);
     }
 
     @DeleteMapping
-    public void delete(@RequestParam long id) {
-        service.delete(id);
+    public Student delete(@RequestParam long id) {
+        return service.delete(id);
     }
 }

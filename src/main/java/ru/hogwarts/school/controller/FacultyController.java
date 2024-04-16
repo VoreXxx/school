@@ -2,6 +2,7 @@ package ru.hogwarts.school.controller;
 
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.FacultyService;
 
 import java.util.Collection;
@@ -20,23 +21,35 @@ public class FacultyController {
         return service.get(id);
     }
 
-    @GetMapping("/filterByColor")
-    public Collection<Faculty> filterByColor(@RequestParam String color) {
-        return service.filterByColor(color);
-    }
-
     @PostMapping
     public Faculty add(@RequestBody Faculty faculty) {
         return service.add(faculty);
     }
 
-    @PutMapping
-    public Faculty update(@RequestBody Faculty faculty) {
-        return service.update(faculty);
+    @PutMapping("/{id}")
+    public Faculty update(@RequestBody Faculty faculty, @PathVariable Long id) {
+        return service.update(faculty, id);
     }
 
-    @DeleteMapping
-    public Faculty delete(@RequestParam long id) {
-        return service.delete(id);
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable long id) {
+        service.delete(id);
+    }
+
+    @GetMapping("/all")
+    public Collection<Faculty> getAllFaculty() {
+        return service.getAllFaculty();
+    }
+
+    @GetMapping("/filter/{color}")
+    public Collection<Faculty> filterByColor(@RequestParam String color) {
+        return service.filterByColor(color);
+    }
+
+    @GetMapping("/filter")
+    public Collection<Faculty> getFacultyByNameOrColor
+            (@RequestParam String name,
+             @RequestParam String color) {
+        return service.findByNameContainingIgnoreCaseOrColorContainingIgnoreCase(name, color);
     }
 }

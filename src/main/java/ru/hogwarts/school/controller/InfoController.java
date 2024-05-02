@@ -27,9 +27,9 @@ public class InfoController {
         long timeStart = System.currentTimeMillis();
 
 
-        Stream.iterate(1, a -> a +1)
+        Stream.iterate(1, a -> a + 1)
                 .limit(1_000_000)
-                .reduce(0, (a, b) -> a + b );
+                .reduce(0, (a, b) -> a + b);
 
 //        LongStream.rangeClosed(1, 1_000_000)
 //                .parallel()

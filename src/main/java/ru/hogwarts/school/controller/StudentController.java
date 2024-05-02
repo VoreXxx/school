@@ -65,7 +65,7 @@ public class StudentController {
         return stringCollection;
     }
 
-    @GetMapping("/averageage")
+    @GetMapping("/average-age")
     public Double getAllStudentsAvgAgeWithStream() {
         return service.getAllStudentsAvgAge();
     }

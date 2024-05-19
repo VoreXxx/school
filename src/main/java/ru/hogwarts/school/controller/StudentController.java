@@ -1,5 +1,7 @@
 package ru.hogwarts.school.controller;
 
+import liquibase.pro.packaged.R;
+import liquibase.pro.packaged.S;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Student;
@@ -55,5 +57,16 @@ public class StudentController {
     public Collection<Student> filterByAgeBetween(@RequestParam Integer minAge,
                                                   @RequestParam Integer maxAge) {
         return service.filterByAgeMinMax(minAge, maxAge);
+    }
+
+    @GetMapping("/filteredbyname")
+    public Collection<String> getAllStudentsWithAName() {
+        Collection<String> stringCollection = service.getFilteredByName();
+        return stringCollection;
+    }
+
+    @GetMapping("/average-age")
+    public Double getAllStudentsAvgAgeWithStream() {
+        return service.getAllStudentsAvgAge();
     }
 }

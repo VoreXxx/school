@@ -66,4 +66,10 @@ public class FacultyController {
              @RequestParam String color) {
         return service.findByNameContainingIgnoreCaseOrColorContainingIgnoreCase(name, color);
     }
+
+
+    @GetMapping("max-name")
+    public String getFacultyNameWithMaxLength() {
+        return service.getFacultyWithMaxNameLength();
+    }
 }

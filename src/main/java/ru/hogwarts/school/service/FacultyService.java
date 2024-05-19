@@ -8,6 +8,7 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repository.FacultyRepository;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Optional;
 
 @Service
@@ -106,4 +107,14 @@ public class FacultyService {
         return filteredFaculties;
     }
 
+    public String getFacultyWithMaxNameLength() {
+        logger.info("Was invoked method to find faculty name with max length");
+
+        return facultyRepository
+                .findAll()
+                .stream()
+                .map(Faculty::getName)
+                .max(Comparator.comparing(String::length))
+                .orElse("");
+    }
 }

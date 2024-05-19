@@ -69,4 +69,14 @@ public class StudentController {
     public Double getAllStudentsAvgAgeWithStream() {
         return service.getAllStudentsAvgAge();
     }
+
+    @GetMapping("/print-parallel")
+    public void getNames() throws InterruptedException {
+        service.getStudentNames();
+    }
+
+    @GetMapping("/syns-thread")
+    public void getNamesSyns() throws InterruptedException {
+        service.getStudentNamesSyns();
+    }
 }

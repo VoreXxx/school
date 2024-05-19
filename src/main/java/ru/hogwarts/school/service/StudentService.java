@@ -1,5 +1,6 @@
 package ru.hogwarts.school.service;
 
+import liquibase.pro.packaged.S;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -152,5 +154,51 @@ public class StudentService {
                 .orElse(0);
     }
 
+    public void getStudentNames() {
+        Thread thread1 = new Thread(() -> {
+            printName(3L);
+            printName(4L);
+        });
+        thread1.setName("Thread 1");
 
+        Thread thread2 = new Thread(() -> {
+            printName(5L);
+            printName(6L);
+        });
+        thread2.setName("Thread 2");
+
+        thread1.start();
+        thread2.start();
+
+        printName(1L);
+        printName(2L);
+    }
+
+    private void printName(Long id) {
+        String studentname = studentRepository.getById(id).getName();
+        System.out.println(studentname);
+    }
+
+    public void getStudentNamesSyns() {
+        Thread thread1 = new Thread(() -> {
+            printNameSyns(3L);
+            printNameSyns(4L);
+        });
+
+        Thread thread2 = new Thread(() -> {
+            printNameSyns(5L);
+            printNameSyns(6L);
+        });
+        printNameSyns(1L);
+        printNameSyns(2L);
+        thread1.start();
+        thread2.start();
+
+
+    }
+
+    private synchronized void printNameSyns(Long id) {
+        String studentname = studentRepository.getById(id).getName();
+        System.out.println(studentname);
+    }
 }
